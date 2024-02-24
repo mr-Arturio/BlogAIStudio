@@ -4,3 +4,5 @@ https://fontawesome.com/ - icons
 fonts:
 body - DM Sans
 headings & Logo: DM Serif Display
+
+OpenAI model: gpt-4-1106-preview
