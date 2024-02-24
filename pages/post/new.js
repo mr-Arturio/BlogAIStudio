@@ -3,10 +3,18 @@ import { AppLayout } from "../../components/AppLayout";
 
 export default function NewPost(props) {
   console.log("PROPS: ", props);
+  const handleClick = async () => {
+    const response = await fetch(`/api/generatePost`, { method: "POST" });
+    const data = await response.json();
+    console.log("DATA: ", data);
+  };
 
   return (
     <div>
       <h1>This is the New post page</h1>
+      <button className="btn" onClick={handleClick}>
+        Generate
+      </button>
     </div>
   );
 }
