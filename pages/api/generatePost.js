@@ -33,9 +33,26 @@ export default async function handler(req, res) {
     temperature: 0,
   });
 
-  console.log(response.data.choices[0]?.message?.content);
+  const postContent = response.data.choices[0]?.message?.content;
 
-  res
-    .status(200)
-    .json({ postContent: response.data.choices[0]?.message?.content });
+  const seaResponse = await openai.createChatCompletion({
+    model: "gpt-4-1106-preview",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are an SEO friendly blog post generator called BlogAiStudio. You are designed to output JSON. Do not include HTML tags in your output.",
+      },
+      {
+        role: "user",
+        content: `Generates an SEO friendly title and SEO friendly meta description for the following blog post: ${postContent}
+        `,
+      },
+    ],
+    response_format: {type:"json_object"},
+  });
+
+  console.log(seaResponse.data.choices[0]?.message?.content);
+
+  res.status(200).json({ post: { postContent } });
 }
