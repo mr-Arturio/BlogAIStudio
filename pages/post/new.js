@@ -10,7 +10,7 @@ export default function NewPost(props) {
     const response = await fetch(`/api/generatePost`, { method: "POST" });
     const data = await response.json();
     console.log("DATA: ", data);
-    setPostContent(data.postContent);
+    setPostContent(data.post.postContent);
   };
 
   return (

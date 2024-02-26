@@ -46,13 +46,26 @@ export default async function handler(req, res) {
       {
         role: "user",
         content: `Generates an SEO friendly title and SEO friendly meta description for the following blog post: ${postContent}
+        ---
+        The output Json must be in the following format:
+        {
+          "title": "Your title here",
+          "meta_description": "Your meta description here"
+        }
         `,
       },
     ],
-    response_format: {type:"json_object"},
+    response_format: { type: "json_object" },
   });
 
-  console.log(seaResponse.data.choices[0]?.message?.content);
+  const { title, meta_description } =
+    seaResponse.data.choices[0]?.message?.content || {};
 
-  res.status(200).json({ post: { postContent } });
+  res.status(200).json({
+    post: {
+      postContent,
+      title,
+      meta_description,
+    },
+  });
 }
