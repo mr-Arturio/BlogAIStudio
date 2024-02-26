@@ -6,8 +6,7 @@ export default async function handler(req, res) {
   });
   const openai = new OpenAIApi(config);
 
-  const topic = "coin collecting";
-  const keywords = "USA silver coins, half dollar, commemorative";
+  const { topic, keywords } = req.body;
 
   const response = await openai.createChatCompletion({
     model: "gpt-4-1106-preview",
