@@ -1,11 +1,28 @@
 import { Configuration, OpenAIApi } from "openai";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import clientPromise from "../../lib/mongodb";
 
-export default async function handler(req, res) {
+// with the withApiAuthRequired higher-order function, you can require authentication to access the API route. If the user is not authenticated, they are redirected to the login page.
+export default withApiAuthRequired(async function handler(req, res) {
+  const { user } = await getSession(req, res);
+  const client = await clientPromise;
+  const db = client.db("BlogAiStudio");
+  // get user profile from the database
+  const userProfile = await db.collection("users").findOne({
+    auth0Id: user.sub,
+  });
+  // check if user exist and if the user doesn't have any available tokens, return a 403 status code
+  if (!userProfile?.availableTokens) {
+    res.status(403); //403 user is authorized, but doesn't have the required permissions to process this request.
+    return;
+  }
+
   const config = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
   const openai = new OpenAIApi(config);
 
+  // get the topic and keywords from the request body
   const { topic, keywords } = req.body;
 
   const response = await openai.createChatCompletion({
@@ -49,7 +66,7 @@ export default async function handler(req, res) {
         The output Json must be in the following format:
         {
           "title": "Your title here",
-          "meta_description": "Your meta description here"
+          "metaDescription": "Your meta description here"
         }
         `,
       },
@@ -57,14 +74,35 @@ export default async function handler(req, res) {
     response_format: { type: "json_object" },
   });
 
-  const { title, meta_description } =
+  const { title, metaDescription } =
     seaResponse.data.choices[0]?.message?.content || {};
+
+  //decrement the user's available tokens by 1 when used
+  await db.collection("users").updateOne(
+    { auth0Id: user.sub },
+    {
+      $inc: {
+        availableTokens: -1,
+      },
+    }
+  );
+
+  // insert the post into the database
+  const post = await db.collection("posts").insertOne({
+    postContent,
+    title,
+    metaDescription,
+    topic,
+    keywords,
+    userId: userProfile._id, //using mongodb's generated user _id
+    created: new Date(),
+  });
 
   res.status(200).json({
     post: {
       postContent,
       title,
-      meta_description,
+      metaDescription,
     },
   });
-}
+});

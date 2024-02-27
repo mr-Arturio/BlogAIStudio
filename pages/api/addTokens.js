@@ -9,6 +9,7 @@ export default async function handler(req, res) {
   const client = await clientPromise;
   const db = client.db("BlogAiStudio");
 
+  // with the getSession function, you can retrieve the user's session from the request object. If the user is not authenticated, the user object is null.
   const userProfile = await db.collection("users").updateOne(
     {
       auth0Id: user.sub,
