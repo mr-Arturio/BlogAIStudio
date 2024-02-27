@@ -74,8 +74,8 @@ export default withApiAuthRequired(async function handler(req, res) {
     response_format: { type: "json_object" },
   });
 
-  const { title, metaDescription } =
-    seaResponse.data.choices[0]?.message?.content || {};
+  const seoData = seaResponse.data.choices[0]?.message?.content;
+  const { title, metaDescription } = JSON.parse(seoData) || {};
 
   //decrement the user's available tokens by 1 when used
   await db.collection("users").updateOne(
@@ -86,6 +86,9 @@ export default withApiAuthRequired(async function handler(req, res) {
       },
     }
   );
+
+  console.log("Successfully generated title and metaDescription:", { title, metaDescription });
+
 
   // insert the post into the database
   const post = await db.collection("posts").insertOne({
