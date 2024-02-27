@@ -87,8 +87,10 @@ export default withApiAuthRequired(async function handler(req, res) {
     }
   );
 
-  console.log("Successfully generated title and metaDescription:", { title, metaDescription });
-
+  console.log("Successfully generated title and metaDescription:", {
+    title,
+    metaDescription,
+  });
 
   // insert the post into the database
   const post = await db.collection("posts").insertOne({
@@ -101,11 +103,9 @@ export default withApiAuthRequired(async function handler(req, res) {
     created: new Date(),
   });
 
+  console.log("Successfully generated post:", post);
+
   res.status(200).json({
-    post: {
-      postContent,
-      title,
-      metaDescription,
-    },
+    postId: post.insertedId,
   });
 });

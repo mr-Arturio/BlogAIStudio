@@ -2,10 +2,10 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import { useState } from "react";
 import Markdown from "react-markdown";
+import { useRouter } from "next/router";
 
 export default function NewPost(props) {
-  console.log("PROPS: ", props);
-  const [postContent, setPostContent] = useState("");
+  const router = useRouter();
   const [topic, setTopic] = useState("");
   const [keywords, setKeywords] = useState("");
   const handleSubmit = async (e) => {
@@ -18,8 +18,14 @@ export default function NewPost(props) {
       body: JSON.stringify({ topic, keywords }),
     });
     const data = await response.json();
+
     console.log("DATA: ", data);
-    setPostContent(data.post.postContent);
+
+    //check if postId exist and was generated successfully
+    if (data?.postId) {
+      //redirect to the post page
+      router.push(`/post/${data.postId}`);
+    }
   };
 
   return (
@@ -52,8 +58,6 @@ export default function NewPost(props) {
           Generate
         </button>{" "}
       </form>
-
-      <Markdown>{postContent}</Markdown>
     </div>
   );
 }
