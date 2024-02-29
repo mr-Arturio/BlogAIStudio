@@ -3,6 +3,7 @@ import { AppLayout } from "../../components/AppLayout";
 import { useState } from "react";
 import Markdown from "react-markdown";
 import { useRouter } from "next/router";
+import { getAppProps } from "../../utils/getAppProps";
 
 export default function NewPost(props) {
   const router = useRouter();
@@ -67,9 +68,12 @@ NewPost.getLayout = function getLayout(page, pageProps) {
 };
 
 //getServerSideProps: fetch data server-side and pass it as props to the page. It runs on every request to the page in '/post/new' and it's called before the page component is rendered.
-export const getServerSideProps = withPageAuthRequired(() => {
+export const getServerSideProps = withPageAuthRequired({
   //withPageAuthRequired is a higher-order function that requires authentication to access the page. If the user is not authenticated, they are redirected to the login page.
-  return {
-    props: {},
-  };
+  async getServerSideProps(ctx) {
+    const props = await getAppProps(ctx);
+    return {
+      props,
+    };
+  },
 });

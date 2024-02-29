@@ -1,5 +1,6 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../components/AppLayout";
+import { getAppProps } from "../utils/getAppProps";
 
 export default function TokenTopup() {
   const handleClick = async () => {
@@ -24,9 +25,12 @@ TokenTopup.getLayout = function getLayout(page, pageProps) {
   return <AppLayout {...pageProps}>{page}</AppLayout>;
 };
 
-export const getServerSideProps = withPageAuthRequired(() => {
+export const getServerSideProps = withPageAuthRequired({
   //withPageAuthRequired is a higher-order function that requires authentication to access the page. If the user is not authenticated, they are redirected to the login page.
-  return {
-    props: {},
-  };
+  async getServerSideProps(ctx) {
+    const props = await getAppProps(ctx);
+    return {
+      props,
+    };
+  },
 });
