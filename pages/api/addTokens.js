@@ -26,38 +26,18 @@ export default async function handler(req, res) {
     line_items: lineItems,
     mode: "payment",
     success_url: `${protocol}${host}/success`,
-    // payment_intent_data: {
-    //   metadata: {
-    //     sub: user.sub,
-    //   },
-    // },
-    // metadata: {
-    //   sub: user.sub,
-    // },
+    payment_intent_data: {
+      metadata: {
+        sub: user.sub,
+      },
+    },
+    //we need to set this data in both of these places within our payment_intent_data and within metadata.
+    metadata: {
+      sub: user.sub,
+    },
   });
 
   console.log("user: ", user);
-
-  const client = await clientPromise;
-  const db = client.db("BlogAiStudio");
-
-  // with the getSession function, you can retrieve the user's session from the request object. If the user is not authenticated, the user object is null.
-  const userProfile = await db.collection("users").updateOne(
-    {
-      auth0Id: user.sub,
-    },
-    {
-      $inc: {
-        availableTokens: 10,
-      },
-      $setOnInsert: {
-        auth0Id: user.sub,
-      },
-    },
-    {
-      upsert: true,
-    }
-  );
 
   res.status(200).json({ session: checkoutSession });
 }
