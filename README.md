@@ -24,3 +24,7 @@ post content:
 
 [stripe handle webhook events documentation](https://dashboard.stripe.com/test/webhooks/create?endpoint_location=local) <br>
 `openssl rand -hex 32` - command to generate a random string
+dont forget to Fix Font Awesome flash of massive icon on load in production with:
+```import '@fortawesome/fontawesome-svg-core/styles.css'; ``` <br>
+```import { config } from '@fortawesome/fontawesome-svg-core';``` <br>
+```config.autoAddCss = false;```
