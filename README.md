@@ -22,5 +22,5 @@ post content:
 - created
 
 
-
+[stripe handle webhook events documentation](https://dashboard.stripe.com/test/webhooks/create?endpoint_location=local) <br>
 `openssl rand -hex 32` - command to generate a random string
