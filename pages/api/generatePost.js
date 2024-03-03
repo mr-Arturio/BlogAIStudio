@@ -25,6 +25,21 @@ export default withApiAuthRequired(async function handler(req, res) {
   // get the topic and keywords from the request body
   const { topic, keywords } = req.body;
 
+  if (!topic || !keywords) {
+    res.status(422);//unprocessable entity
+    return;
+  }
+
+  if (
+    topic.length < 5 ||
+    keywords.length < 3 ||
+    topic.length > 85 ||
+    keywords.length > 85
+  ) {
+    res.status(422);//unprocessable entity
+    return;
+  }
+
   const response = await openai.createChatCompletion({
     model: "gpt-4-1106-preview",
     messages: [
