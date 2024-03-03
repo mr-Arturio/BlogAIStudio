@@ -12,11 +12,15 @@ export default function TokenTopup() {
     window.location.href = json.session.url;
   };
   return (
-    <div>
-      <h1>This is the Token Popup page</h1>
-      <button className="btn" onClick={handleClick}>
-        Add tokens
-      </button>
+    <div className="h-full overflow-hidden">
+      <div className="w-full h-full flex flex-col overflow-auto">
+        <div className="m-auto w-full max-w-screen-sm bg-slate-100 p-4 rounded-md shadow-xl border border-slate-200 shadow-slate-200">
+          <h1 className="w-full text-center">This is the Token Popup page</h1>
+          <button className="btn" onClick={handleClick}>
+            Add tokens
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
