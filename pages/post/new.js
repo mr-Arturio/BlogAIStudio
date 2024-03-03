@@ -60,7 +60,7 @@ export default function NewPost(props) {
                 className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                maxLength={80}
+                maxLength={85}
               />
             </div>
             <div>
@@ -71,7 +71,7 @@ export default function NewPost(props) {
                 className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm"
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
-                maxLength={80}
+                maxLength={85}
               />
               <small className="block mb-2">
                 Separate keywords with a comma
@@ -80,7 +80,12 @@ export default function NewPost(props) {
             <button
               type="submit"
               className="btn"
-              disabled={!topic.trim() || !keywords.trim()}
+              disabled={
+                !topic.trim() ||
+                topic.trim().length < 5 ||
+                !keywords.trim() ||
+                keywords.trim().length < 3
+              }
             >
               Generate
             </button>{" "}
