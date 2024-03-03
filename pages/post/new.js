@@ -77,7 +77,11 @@ export default function NewPost(props) {
                 Separate keywords with a comma
               </small>{" "}
             </div>
-            <button type="submit" className="btn">
+            <button
+              type="submit"
+              className="btn"
+              disabled={!topic.trim() || !keywords.trim()}
+            >
               Generate
             </button>{" "}
           </form>
