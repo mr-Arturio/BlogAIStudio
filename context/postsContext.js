@@ -7,6 +7,7 @@ export default PostsContext;
 
 function postsReducer(state, action) {
   switch (action.type) {
+    //case 
     case 'addPosts': {
       const newPosts = [...state];
       action.posts.forEach((post) => {
