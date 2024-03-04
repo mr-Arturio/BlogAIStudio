@@ -5,9 +5,30 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Logo } from "../Logo";
+import PostsContext from "../../context/postsContext";
+import { useContext, useEffect } from "react";
 
-export const AppLayout = ({ children, availableTokens, posts, postId }) => {
-  const { user, error, isLoading } = useUser();
+export const AppLayout = ({
+  children,
+  availableTokens,
+  posts: postsFromSSR,
+  postId,
+  postCreated,
+}) => {
+  const { user } = useUser();
+
+  const { setPostsFromSSR, posts, getPosts, noMorePosts } =
+    useContext(PostsContext);
+
+  useEffect(() => {
+    setPostsFromSSR(postsFromSSR);
+    if (postId) {
+      const exists = postsFromSSR.find((post) => post._id === postId);
+      if (!exists) {
+        getPosts({ getNewerPosts: true, lastPostDate: postCreated });
+      }
+    }
+  }, [postsFromSSR, setPostsFromSSR, postId, postCreated, getPosts]);
 
   return (
     <div className="grid grid-cols-[300px_1fr] h-screen max-h-screen">
@@ -34,7 +55,7 @@ export const AppLayout = ({ children, availableTokens, posts, postId }) => {
               {post.topic}
             </Link>
           ))}
-          {/* {!noMorePosts && (
+          {!noMorePosts && (
             <div
               onClick={() => {
                 getPosts({ lastPostDate: posts[posts.length - 1].created });
@@ -43,7 +64,7 @@ export const AppLayout = ({ children, availableTokens, posts, postId }) => {
             >
               Load more posts
             </div>
-          )} */}
+          )}
         </div>
         <div className="bg-cyan-800 flex items-center gap-2 border-t border-t-black/50 h-20 px-2">
           {" "}
