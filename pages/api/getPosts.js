@@ -20,6 +20,7 @@ export default withApiAuthRequired(async function handler(req, res) {
       .collection("posts")
       .find({
         userId: userProfile._id,
+        //$gt and $lt operators are used to specify conditions for greater than and less than comparisons in MongoDB
         created: { [getNewerPosts ? "$gt" : "$lt"]: new Date(lastPostDate) },
       })
       .limit(getNewerPosts ? 0 : 5)
