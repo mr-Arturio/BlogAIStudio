@@ -58,7 +58,7 @@ export const AppLayout = ({
           {!noMorePosts && (
             <div
               onClick={() => {
-                getPosts({ lastPostDate: posts[posts.length - 1].created });
+                getPosts({ lastPostDate: posts[posts.length - 1].created }); //load post starting from the last post
               }}
               className="hover:underline text-sm text-slate-400 text-center cursor-pointer mt-4"
             >
