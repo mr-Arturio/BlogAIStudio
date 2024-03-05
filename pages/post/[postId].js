@@ -2,6 +2,7 @@ import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import Markdown from "react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { getAppProps } from "../../utils/getAppProps";
@@ -56,7 +57,7 @@ export default function Post(props) {
         <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
           Blog post
         </div>
-        <div dangerouslySetInnerHTML={{ __html: props.postContent || "" }} />
+        <Markdown>{props.postContent || ""}</Markdown>
         <div className="my-4">
           {!showDeleteConfirm && (
             <button
