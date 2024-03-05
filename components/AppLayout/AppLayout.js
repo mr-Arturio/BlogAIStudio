@@ -35,7 +35,7 @@ export const AppLayout = ({
       <div className="flex flex-col text-white overflow-hidden">
         <div className="bg-slate-800 px-2">
           <Logo />
-          <Link href="/post/new" className="btn">
+          <Link href="/post/new" className="btn2">
             New post
           </Link>
           <Link href="/token-topup" className="block mt-2 text-center">
