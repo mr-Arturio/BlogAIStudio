@@ -1,6 +1,6 @@
 ## BlogAIStudio
 An Software-As-A-Service application to generate an SEO-friendly blog posts. <br>
-Build with `NextJS`, `Tailwind`, `MongoDB`, `OpenAI`, `Stripe` and `Auth0`.
+Build with `NextJS`, `Tailwind`, `MongoDB`, `OpenAI`, `Stripe` and `Auth0`.<br>
 Deployed on [DigitalOcean](https://www.digitalocean.com/) - https://coral-app-5lxxp.ondigitalocean.app/
 
 Upon launching the app, users are welcomed by a vibrant and animated start screen. To begin, pressing the "Begin" button will guide new users to the `Auth0` registration page for account setup. Once authenticated, users will be directed to a creative interface where they can compose their blog posts. Here, you simply enter a general topic and relevant keywords to start crafting your content.
