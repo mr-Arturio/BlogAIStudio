@@ -1,5 +1,5 @@
-## BlogAIStudio
-An Software-As-A-Service application to generate an SEO-friendly blog posts. <br>
+## BlogAiStudio
+A Software-As-A-Service application to generate an SEO-friendly blog post. <br>
 Build with `NextJS`, `Tailwind`, `MongoDB`, `OpenAI`, `Stripe` and `Auth0`.<br>
 Deployed on [DigitalOcean](https://www.digitalocean.com/) - https://coral-app-5lxxp.ondigitalocean.app/ <br>
 To try it out for free use: test@g.com and A!123456
