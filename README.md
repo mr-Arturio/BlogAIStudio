@@ -1,7 +1,7 @@
 ## BlogAiStudio
 A Software-As-A-Service application to generate an SEO-friendly blog post. <br>
 Build with `NextJS`, `Tailwind`, `MongoDB`, `OpenAI`, `Stripe` and `Auth0`.<br>
-Deployed on [DigitalOcean](https://www.digitalocean.com/) - https://coral-app-5lxxp.ondigitalocean.app/ <br>
+Deployed on [Vercel](https://vercel.com/) - [https://coral-app-5lxxp.ondigitalocean.app/](https://blog-ai-studio.vercel.app/) <br>
 To try it out for free use: test@g.com and A!123456
 
 Upon launching the app, users are welcomed by a vibrant and animated start screen. To begin, pressing the "Begin" button will guide new users to the `Auth0` registration page for account setup. Once authenticated, users will be directed to a creative interface where they can compose their blog posts. Here, you simply enter a general topic and relevant keywords to start crafting your content.
